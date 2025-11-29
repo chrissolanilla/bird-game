@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfvc7usqypfj0"]
+
+[ext_resource type="PackedScene" uid="uid://c8c8njgg8jv4c" path="res://birds/hummingBird/hummingBird.tscn" id="1_eok1x"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_erh00"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_jxip8"]
+sky_material = SubResource("ProceduralSkyMaterial_erh00")
+
+[sub_resource type="Environment" id="Environment_eaaqc"]
+background_mode = 2
+sky = SubResource("Sky_jxip8")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Level1" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_eaaqc")
+
+[node name="Node3D" parent="." instance=ExtResource("1_eok1x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.505221, 0, -2.17968)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.89666, 0)
+size = Vector3(20, 1, 20)
