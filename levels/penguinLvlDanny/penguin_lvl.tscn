@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwiqube8qpe2i"]
+
+[ext_resource type="PackedScene" uid="uid://cft82bjdwieig" path="res://birds/penguin/source/model.gltf" id="1_lerr7"]
+[ext_resource type="Texture2D" uid="uid://c8arnlq67qi7" path="res://textures/grids/Dark/texture_05.png" id="2_j2vmk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4uhxo"]
+albedo_texture = ExtResource("2_j2vmk")
+uv1_triplanar = true
+
+[node name="PenguinLvl" type="Node3D"]
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_lerr7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38493, 3.24982, 5.33874)
+
+[node name="map" type="Node3D" parent="."]
+
+[node name="floor" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = SubResource("StandardMaterial3D_4uhxo")
+size = Vector3(1000, 1, 1000)
