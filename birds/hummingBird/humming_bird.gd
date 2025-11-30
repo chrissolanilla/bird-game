@@ -1,40 +1,48 @@
 extends CharacterBody3D
 
-@export var speed := 10.0
-@export var vertical_speed := 6.0
-@export var acceleration := 10.0
-@onready var camera_3d: Camera3D = $Camera3D
+@export var fly_speed := 14.0
+@export var vertical_speed := 10.0
+@export var turn_speed := 6.0
+@export var mouse_sens := 0.002
 
-
-@export var mouse_sens := 0.005
-var input_dir := Vector3.ZERO
+@onready var yaw: Node3D = $Yaw
+@onready var pitch: Node3D = $Yaw/Pitch
+@onready var bird_mesh: Node3D = $Mesh  # your mesh root
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	342
+	#self.rotation_degrees.y = 180	
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		self.rotation.y -= event.relative.x * mouse_sens
-		self.rotation.x -= event.relative.y * mouse_sens
+		# Horizontal turn
+		yaw.rotate_y(-event.relative.x * mouse_sens)
+
+		# Camera pitch
+		pitch.rotation.x += event.relative.y * mouse_sens
+		pitch.rotation.x = clamp(pitch.rotation.x, deg_to_rad(-80), deg_to_rad(80))
 
 func _physics_process(delta: float) -> void:
-	var input_vec := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	var forward := -transform.basis.z
-	var right := -transform.basis.x
-	
-	var horizontal_dir := (forward * input_vec.y) + (right * input_vec.x)
-	horizontal_dir = horizontal_dir.normalized()
-	var up := Input.is_action_pressed("ascend")
-	var down := Input.is_action_pressed("descend")
-	var vertical_dir := 0.0
-	
-	if up:
-		vertical_dir = 1.0
-	elif down:
-		vertical_dir = -1.0
-		
-	var target_velocity := horizontal_dir * speed
-	target_velocity.y = vertical_dir * vertical_speed
-	#smooth
-	velocity = velocity.lerp(target_velocity, acceleration * delta)
+	var input_vec := Input.get_vector("move_right", "move_left", "move_back", "move_forward")
+	# Forward/right relative to camera yaw
+	var forward := yaw.transform.basis.z
+	var right := yaw.transform.basis.x
+	# Horizontal direction
+	var horizontal := (forward * input_vec.y) + (right * input_vec.x)
+	horizontal = horizontal.normalized()
+	# Vertical
+	var vertical := 0.0
+	if Input.is_action_pressed("ascend"):
+		vertical = 1.0
+	elif Input.is_action_pressed("descend"):
+		vertical = -1.0
+	# Total movement vector
+	var move_dir := horizontal * fly_speed
+	move_dir.y = vertical * vertical_speed
+	# Smooth acceleration
+	velocity = velocity.lerp(move_dir, 10.0 * delta)
 	move_and_slide()
+	# Smoothly rotate the bird mesh toward flight direction
+	if velocity.length() > 0.1:
+		var target_basis := Basis().looking_at(-velocity.normalized(), Vector3.UP)
+		bird_mesh.basis = bird_mesh.basis.slerp(target_basis, turn_speed * delta)
