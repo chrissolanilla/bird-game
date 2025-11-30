@@ -3,8 +3,19 @@ extends CharacterBody3D
 @export var speed := 10.0
 @export var vertical_speed := 6.0
 @export var acceleration := 10.0
+@onready var camera_3d: Camera3D = $Camera3D
 
+
+@export var mouse_sens := 0.005
 var input_dir := Vector3.ZERO
+
+func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	342
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		self.rotation.y -= event.relative.x * mouse_sens
+		self.rotation.x -= event.relative.y * mouse_sens
 
 func _physics_process(delta: float) -> void:
 	var input_vec := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
