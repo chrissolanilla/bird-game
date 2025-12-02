@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dfvc7usqypfj0"]
 
-[ext_resource type="PackedScene" uid="uid://c8c8njgg8jv4c" path="res://birds/hummingBird/hummingBird.tscn" id="1_eok1x"]
 [ext_resource type="MeshLibrary" uid="uid://cn5neup7yshop" path="res://models/gridMaps/TreeGridMap.tres" id="2_erh00"]
+[ext_resource type="PackedScene" uid="uid://pq7g3a8ov3yn" path="res://birds/Eagle/Eagle.tscn" id="3_jxip8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_erh00"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -21,12 +21,12 @@ glow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_eaaqc")
 
-[node name="HummingBird" parent="." instance=ExtResource("1_eok1x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.505221, 0, -2.17968)
-
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("2_erh00")
 data = {
 "cells": PackedInt32Array(65529, 20, 2, 10, 34, 1, 48, 65496, 1, 49, 65496, 1, 65530, 7, 2, 43, 65518, 2)
 }
 metadata/_editor_floor_ = Vector3(0, -2, 0)
+
+[node name="Eagle" parent="." instance=ExtResource("3_jxip8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 149.021, 91.4734, 132.187)
