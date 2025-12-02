@@ -21,9 +21,6 @@ glow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_eaaqc")
 
-[node name="HummingBird" parent="." instance=ExtResource("1_eok1x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.505221, 0, -2.17968)
-
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("2_erh00")
 data = {

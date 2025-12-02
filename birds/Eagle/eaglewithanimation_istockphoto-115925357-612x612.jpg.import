@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://we2oxkd467mv"
+path.s3tc="res://.godot/imported/eaglewithanimation_istockphoto-115925357-612x612.jpg-34e35fa36011334c5fe61ba6573129d2.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "d46d0aa60057bb659d751165835cc74b"
+}
+
+[deps]
+
+source_file="res://birds/Eagle/eaglewithanimation_istockphoto-115925357-612x612.jpg"
+dest_files=["res://.godot/imported/eaglewithanimation_istockphoto-115925357-612x612.jpg-34e35fa36011334c5fe61ba6573129d2.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0
