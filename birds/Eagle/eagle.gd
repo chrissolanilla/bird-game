@@ -11,6 +11,10 @@ extends CharacterBody3D
 @onready var pitch: Node3D = $Yaw/Pitch
 @onready var bird_mesh: Node3D =  $eaglewithanimation/Armature/Skeleton3D/eaglebody# your mesh root
 @onready var animation_player: AnimationPlayer = $eaglewithanimation/AnimationPlayer
+@onready var camera_3d: Camera3D = $Yaw/Pitch/Camera3D
+
+func _enter_tree() -> void:
+	set_multiplayer_authority(name.to_int())
 
 enum {FLYING, ATTACK}
 
@@ -31,6 +35,7 @@ var current_delta
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	camera_3d.current = is_multiplayer_authority()
 	#self.rotation_degrees.y = 180	
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -44,38 +49,42 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 
 func _physics_process(delta: float) -> void:
-	current_delta = delta
-	if Input.is_action_just_pressed("ui_accept"):
-		current_anim = ATTACK
-		#handle_anim(delta)
-		attack_val = 1
-		update_tree()
-		attack_timer.start()
-		
-	
-	var input_vec := Input.get_vector("move_right", "move_left", "move_back", "move_forward")
-	# Forward/right relative to camera yaw
-	var forward := yaw.transform.basis.z
-	var right := yaw.transform.basis.x
-	# Horizontal direction
-	var horizontal := (forward * input_vec.y) + (right * input_vec.x)
-	horizontal = horizontal.normalized()
-	# Vertical
-	var vertical := 0.0
-	if Input.is_action_pressed("ascend"):
-		vertical = 1.0
-	elif Input.is_action_pressed("descend"):
-		vertical = -1.0
-	# Total movement vector
-	var move_dir := horizontal * fly_speed
-	move_dir.y = vertical * vertical_speed
-	# Smooth acceleration
-	velocity = velocity.lerp(move_dir, 10.0 * delta)
-	move_and_slide()
-	# Smoothly rotate the bird mesh toward flight direction
-	if velocity.length() > 0.1:
-		var target_basis := Basis().looking_at(-velocity.normalized(), Vector3.UP)
-		bird_mesh.basis = bird_mesh.basis.slerp(target_basis, turn_speed * delta)
+	if is_multiplayer_authority():
+		current_delta = delta
+		if Input.is_action_just_pressed("ui_accept"):
+			current_anim = ATTACK
+			#handle_anim(delta)
+			attack_val = 1
+			update_tree()
+			attack_timer.start()
+			
+		if Input.is_action_just_pressed("ui_cancel"):
+			$"../".pause()
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			
+		var input_vec := Input.get_vector("move_right", "move_left", "move_back", "move_forward")
+		# Forward/right relative to camera yaw
+		var forward := yaw.transform.basis.z
+		var right := yaw.transform.basis.x
+		# Horizontal direction
+		var horizontal := (forward * input_vec.y) + (right * input_vec.x)
+		horizontal = horizontal.normalized()
+		# Vertical
+		var vertical := 0.0
+		if Input.is_action_pressed("ascend"):
+			vertical = 1.0
+		elif Input.is_action_pressed("descend"):
+			vertical = -1.0
+		# Total movement vector
+		var move_dir := horizontal * fly_speed
+		move_dir.y = vertical * vertical_speed
+		# Smooth acceleration
+		velocity = velocity.lerp(move_dir, 10.0 * delta)
+		move_and_slide()
+		# Smoothly rotate the bird mesh toward flight direction
+		if velocity.length() > 0.1:
+			var target_basis := Basis().looking_at(-velocity.normalized(), Vector3.UP)
+			bird_mesh.basis = bird_mesh.basis.slerp(target_basis, turn_speed * delta)
 
 
 func _on_attack_timer_timeout() -> void:
