@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://celkjdaxnfr5l"
+path.s3tc="res://.godot/imported/shoebillBETA_abu-at-exmoor-very-close-up-pic-v0-kgw6643l86if1.webp-7dff18e8de0ca47d869ca7b8361f85fd.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "1c275ef8fad9db5c1b44e33cdd9ba9a2"
+}
+
+[deps]
+
+source_file="res://birds/shoeBill/shoebillBETA_abu-at-exmoor-very-close-up-pic-v0-kgw6643l86if1.webp"
+dest_files=["res://.godot/imported/shoebillBETA_abu-at-exmoor-very-close-up-pic-v0-kgw6643l86if1.webp-7dff18e8de0ca47d869ca7b8361f85fd.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

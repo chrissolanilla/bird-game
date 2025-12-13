@@ -13,7 +13,11 @@ func _on_host_pressed() -> void:
 	$CanvasLayer.hide()
 
 func _on_join_pressed() -> void:
-	peer.create_client("127.0.0.1", 1027)
+	#penguins public ip(harmless cause its public ip dw)
+	peer.create_client("108.226.109.26", 1027)
+	#if you are local
+	#peer.create_client("127.0.0.1",1027)
+
 	multiplayer.multiplayer_peer = peer
 	$CanvasLayer.hide()
 
@@ -36,6 +40,7 @@ func _del_player(id):
 
 func _on_resume_pressed() -> void:
 	$CanvasLayer.hide()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _on_quit_pressed() -> void:
 	exit_game(multiplayer.get_unique_id())
